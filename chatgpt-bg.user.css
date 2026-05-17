@@ -1,0 +1,562 @@
+/* ==UserStyle==
+@name ChatGPT Joey Mobile Theme CSS Stable
+@version 3.5.5
+@match https://chatgpt.com/*
+@match https://chat.openai.com/*
+==/UserStyle== */
+
+:root {
+    --joey-bg: url("https://i.postimg.cc/7Yn8Cxgw/IMG-9498.jpg");
+
+    --assistant-name: "Char";
+    --user-name: "User";
+
+    --assistant-avatar: url("https://i.postimg.cc/yY9TTPnC/IMG-9514.jpg");
+    --user-avatar: url("https://i.postimg.cc/tCPzz5kK/IMG-9515.jpg");
+
+    --font-main: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+    --name-font: var(--font-main);
+    --font-main-weight: 400;
+    --name-font-size: 32px;
+
+    --avatar-size: 48px;
+    --avatar-space: 84px;
+
+    --assistant-bubble-bg: rgba(255, 255, 255, 0.26);
+    --assistant-bubble-border: rgba(255, 255, 255, 0.32);
+    --assistant-bubble-shadow: rgba(80, 80, 90, 0.06);
+    --assistant-bubble-text: rgba(52, 52, 56, 0.92);
+
+    --user-bubble-bg: rgba(255, 255, 255, 0.26);
+    --user-bubble-border: rgba(255, 255, 255, 0.32);
+    --user-bubble-shadow: rgba(80, 80, 90, 0.06);
+    --user-bubble-text: rgba(52, 52, 56, 0.92);
+
+    --name-text: rgba(52, 52, 56, 0.72);
+
+    --composer-bg: rgba(255, 255, 255, 0.24);
+    --composer-text: rgba(48, 48, 52, 0.88);
+    --composer-placeholder: rgba(48, 48, 52, 0.48);
+    --composer-shift: 8px;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --joey-bg: url("https://i.postimg.cc/HnFzS7DD/IMG-9493.jpg");
+
+        --assistant-bubble-bg: rgba(42, 43, 48, 0.50);
+        --assistant-bubble-border: rgba(255, 255, 255, 0.14);
+        --assistant-bubble-shadow: rgba(0, 0, 0, 0.18);
+        --assistant-bubble-text: rgba(245, 245, 247, 0.92);
+
+        --user-bubble-bg: rgba(42, 43, 48, 0.50);
+        --user-bubble-border: rgba(255, 255, 255, 0.14);
+        --user-bubble-shadow: rgba(0, 0, 0, 0.18);
+        --user-bubble-text: rgba(245, 245, 247, 0.92);
+
+        --name-text: rgba(245, 245, 247, 0.68);
+
+        --composer-bg: rgba(38, 39, 44, 0.46);
+        --composer-text: rgba(245, 245, 247, 0.88);
+        --composer-placeholder: rgba(245, 245, 247, 0.46);
+    }
+}
+
+html.dark {
+    --joey-bg: url("https://i.postimg.cc/HnFzS7DD/IMG-9493.jpg");
+
+    --assistant-bubble-bg: rgba(42, 43, 48, 0.50);
+    --assistant-bubble-border: rgba(255, 255, 255, 0.14);
+    --assistant-bubble-shadow: rgba(0, 0, 0, 0.18);
+    --assistant-bubble-text: rgba(245, 245, 247, 0.92);
+
+    --user-bubble-bg: rgba(42, 43, 48, 0.50);
+    --user-bubble-border: rgba(255, 255, 255, 0.14);
+    --user-bubble-shadow: rgba(0, 0, 0, 0.18);
+    --user-bubble-text: rgba(245, 245, 247, 0.92);
+
+    --name-text: rgba(245, 245, 247, 0.68);
+
+    --composer-bg: rgba(38, 39, 44, 0.46);
+    --composer-text: rgba(245, 245, 247, 0.88);
+    --composer-placeholder: rgba(245, 245, 247, 0.46);
+}
+
+html,
+body {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    min-height: 100% !important;
+    background: transparent !important;
+    font-family: var(--font-main) !important;
+    overscroll-behavior: none !important;
+}
+
+body input,
+body textarea,
+body [contenteditable="true"],
+main#main,
+main#main *,
+main#main button {
+    font-family: var(--font-main) !important;
+}
+
+main [data-message-author-role="assistant"] .markdown,
+main [data-message-author-role="assistant"] .markdown *,
+main [data-message-author-role="user"] .user-message-bubble-color,
+main [data-message-author-role="user"] .user-message-bubble-color *,
+main #thread-bottom-container form [contenteditable="true"],
+main #thread-bottom-container form textarea,
+main #thread-bottom-container form [role="textbox"] {
+    font-weight: var(--font-main-weight) !important;
+}
+
+body::before {
+    content: "" !important;
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: -1 !important;
+    pointer-events: none !important;
+    background-image: var(--joey-bg) !important;
+    background-size: cover !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+}
+
+body,
+body > div:first-child,
+body > div:first-child > div,
+main#main {
+    background: transparent !important;
+}
+
+[class*="scroll-root"] {
+    background: transparent !important;
+    overscroll-behavior-y: contain !important;
+    -webkit-overflow-scrolling: touch !important;
+}
+
+/* 侧边栏顶部入口跟随列表滚动 */
+aside [class*="sticky"][class*="top"],
+aside [class*="fixed"][class*="top"],
+nav [class*="sticky"][class*="top"]:not(#page-header):not(#thread-bottom-container *),
+nav [class*="fixed"][class*="top"]:not(#page-header):not(#thread-bottom-container *),
+[data-testid*="sidebar"] [class*="sticky"][class*="top"],
+[data-testid*="sidebar"] [class*="fixed"][class*="top"],
+[class*="sidebar"] [class*="sticky"][class*="top"],
+[class*="sidebar"] [class*="fixed"][class*="top"] {
+    position: static !important;
+    top: auto !important;
+    transform: none !important;
+}
+
+aside,
+[data-testid*="sidebar"],
+[class*="sidebar"] {
+    -webkit-overflow-scrolling: touch !important;
+}
+
+main ~ div:has([href*="apps.apple.com"]),
+body > div:has([href*="apps.apple.com"]):not(:has(main)),
+body > div:has(button):has(img[alt*="ChatGPT"]):not(:has(main)),
+body > div:has(a[href*="apps.apple.com"]):not(:has(main)) {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    overflow: hidden !important;
+}
+
+header,
+header::before,
+header::after,
+#page-header,
+#page-header::before,
+#page-header::after,
+nav,
+[role="banner"],
+[class*="sticky"][class*="top"] {
+    background: transparent !important;
+    background-image: none !important;
+    border: 0 !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+#page-header + *,
+#page-header + *::before,
+#page-header + *::after,
+main#main,
+main#main::before,
+main#main::after,
+[class*="scroll-root"],
+[class*="scroll-root"]::before,
+[class*="scroll-root"]::after {
+    background-image: none !important;
+    border-top-color: transparent !important;
+    border-bottom-color: transparent !important;
+    outline: none !important;
+    box-shadow: none !important;
+    --tw-ring-color: transparent !important;
+    --tw-ring-shadow: 0 0 #0000 !important;
+    --tw-ring-offset-shadow: 0 0 #0000 !important;
+}
+
+main #thread-bottom-container > div[class*="text-xs"],
+#thread-bottom-container [class*="text-token-text-secondary"],
+#thread-bottom-container [class*="text-token-text-tertiary"] {
+    visibility: hidden !important;
+}
+
+main #thread-bottom-container,
+main #thread-bottom {
+    background: transparent !important;
+    background-image: none !important;
+    box-shadow: none !important;
+}
+
+main #thread-bottom-container::before,
+main #thread-bottom-container::after {
+    background: transparent !important;
+    background-image: none !important;
+    box-shadow: none !important;
+    opacity: 0 !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+main #thread-bottom-container {
+    bottom: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+main #thread-bottom-container #thread-bottom {
+    transform: none !important;
+}
+
+main #thread-bottom-container form {
+    transform: translateY(var(--composer-shift)) !important;
+    background: transparent !important;
+    background-image: none !important;
+}
+
+main #thread-bottom-container form .bg-token-bg-primary {
+    min-height: 64px !important;
+    background: var(--composer-bg) !important;
+    background-color: var(--composer-bg) !important;
+    background-image: none !important;
+    color: var(--composer-text) !important;
+    border-color: transparent !important;
+    outline: none !important;
+    box-shadow: 0 4px 18px rgba(80, 80, 90, 0.08) !important;
+    backdrop-filter: blur(18px) saturate(130%) !important;
+    -webkit-backdrop-filter: blur(18px) saturate(130%) !important;
+}
+
+main #thread-bottom-container form [contenteditable="true"],
+main #thread-bottom-container form textarea,
+main #thread-bottom-container form [role="textbox"] {
+    min-height: 28px !important;
+    max-height: 72px !important;
+    color: var(--composer-text) !important;
+}
+
+main #thread-bottom-container form [data-placeholder],
+main #thread-bottom-container form ::placeholder {
+    color: var(--composer-placeholder) !important;
+}
+
+main #thread-bottom-container form,
+main #thread-bottom-container form *,
+main #thread-bottom-container form *::before,
+main #thread-bottom-container form *::after {
+    --tw-ring-color: transparent !important;
+    --tw-ring-shadow: 0 0 #0000 !important;
+    --tw-ring-offset-shadow: 0 0 #0000 !important;
+    outline-color: transparent !important;
+}
+
+main #thread-bottom-container form .bg-token-bg-primary,
+main #thread-bottom-container form .bg-token-bg-primary::before,
+main #thread-bottom-container form .bg-token-bg-primary::after,
+main #thread-bottom-container form .bg-token-bg-primary:focus,
+main #thread-bottom-container form .bg-token-bg-primary:focus-within,
+main #thread-bottom-container form .bg-token-bg-primary:focus-visible {
+    border-color: transparent !important;
+    outline: none !important;
+}
+
+main form {
+    background: transparent !important;
+    background-image: none !important;
+}
+
+/* 项目页顶部/底部黑白渐变遮罩透明化 */
+main [class*="bg-gradient-to-b"],
+main [class*="bg-gradient-to-t"],
+main [class*="bg-linear-to-b"],
+main [class*="bg-linear-to-t"],
+main [class*="linear-gradient"],
+main [class*="from-token"][class*="to-transparent"],
+main [class*="from-transparent"][class*="to-token"],
+main [class*="sticky"][class*="top"][class*="bg-token"][class*="from-"],
+main [class*="sticky"][class*="bottom"][class*="bg-token"][class*="from-"],
+main [style*="linear-gradient"],
+main [style*="mask-image"] {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
+}
+
+body [class*="bg-gradient-to-b"]:not(#chatgpt-theme-panel-v3):not(#chatgpt-theme-panel-v3 *),
+body [class*="bg-gradient-to-t"]:not(#chatgpt-theme-panel-v3):not(#chatgpt-theme-panel-v3 *),
+body [class*="bg-linear-to-b"]:not(#chatgpt-theme-panel-v3):not(#chatgpt-theme-panel-v3 *),
+body [class*="bg-linear-to-t"]:not(#chatgpt-theme-panel-v3):not(#chatgpt-theme-panel-v3 *),
+body [class*="from-token"][class*="to-transparent"]:not(#chatgpt-theme-panel-v3):not(#chatgpt-theme-panel-v3 *),
+body [class*="from-transparent"][class*="to-token"]:not(#chatgpt-theme-panel-v3):not(#chatgpt-theme-panel-v3 *),
+body [style*="linear-gradient"]:not(#chatgpt-theme-panel-v3):not(#chatgpt-theme-panel-v3 *),
+body [style*="mask-image"]:not(#chatgpt-theme-panel-v3):not(#chatgpt-theme-panel-v3 *) {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    box-shadow: none !important;
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
+}
+
+main [class*="bg-gradient-to-b"]::before,
+main [class*="bg-gradient-to-b"]::after,
+main [class*="bg-gradient-to-t"]::before,
+main [class*="bg-gradient-to-t"]::after,
+main [class*="bg-linear-to-b"]::before,
+main [class*="bg-linear-to-b"]::after,
+main [class*="bg-linear-to-t"]::before,
+main [class*="bg-linear-to-t"]::after,
+main [class*="from-token"][class*="to-transparent"]::before,
+main [class*="from-token"][class*="to-transparent"]::after,
+main [class*="from-transparent"][class*="to-token"]::before,
+main [class*="from-transparent"][class*="to-token"]::after {
+    background: transparent !important;
+    background-image: none !important;
+    opacity: 0 !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
+}
+
+main [data-message-author-role="assistant"],
+main [data-message-author-role="user"] {
+    position: relative !important;
+    padding-top: var(--avatar-space) !important;
+    font-family: var(--font-main) !important;
+}
+
+[data-message-author-role="assistant"] .markdown {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+}
+
+[data-message-author-role="assistant"] .markdown > p,
+[data-message-author-role="assistant"] .markdown > ul,
+[data-message-author-role="assistant"] .markdown > ol {
+    width: fit-content !important;
+    max-width: 86% !important;
+    margin: 7px 0 !important;
+    padding: 9px 13px !important;
+    border-radius: 7px 17px 17px 17px !important;
+    background-color: var(--assistant-bubble-bg) !important;
+    border: 1px solid var(--assistant-bubble-border) !important;
+    box-shadow: 0 4px 14px var(--assistant-bubble-shadow) !important;
+    color: var(--assistant-bubble-text) !important;
+    position: relative !important;
+    overflow: visible !important;
+    backdrop-filter: blur(18px) saturate(135%) !important;
+    -webkit-backdrop-filter: blur(18px) saturate(135%) !important;
+}
+
+[data-message-author-role="assistant"] .markdown > ul,
+[data-message-author-role="assistant"] .markdown > ol {
+    padding: 9px 15px 9px 28px !important;
+}
+
+[data-message-author-role="assistant"] .markdown > p:empty {
+    display: none !important;
+}
+
+[data-message-author-role="assistant"] .markdown > pre {
+    max-width: 100% !important;
+}
+
+main [data-message-author-role="user"] {
+    background: transparent !important;
+    background-image: none !important;
+    box-shadow: none !important;
+    border: 0 !important;
+}
+
+main [data-message-author-role="user"] .user-message-bubble-color {
+    border-radius: 17px 7px 17px 17px !important;
+    background: var(--user-bubble-bg) !important;
+    background-color: var(--user-bubble-bg) !important;
+    background-image: none !important;
+    border: 1px solid var(--user-bubble-border) !important;
+    box-shadow: 0 4px 14px var(--user-bubble-shadow) !important;
+    color: var(--user-bubble-text) !important;
+    position: relative !important;
+    overflow: visible !important;
+    backdrop-filter: blur(18px) saturate(135%) !important;
+    -webkit-backdrop-filter: blur(18px) saturate(135%) !important;
+}
+
+main [data-message-author-role="user"] .user-message-bubble-color * {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    box-shadow: none !important;
+}
+
+main [data-message-author-role="assistant"]::before,
+main [data-message-author-role="user"]::before {
+    content: "" !important;
+    position: absolute !important;
+    top: 0 !important;
+    width: var(--avatar-size) !important;
+    height: var(--avatar-size) !important;
+    border-radius: 50% !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    pointer-events: none !important;
+    z-index: 2 !important;
+}
+
+main [data-message-author-role="assistant"]::before {
+    left: 0 !important;
+    background-image: var(--assistant-avatar) !important;
+}
+
+main [data-message-author-role="user"]::before {
+    right: 0 !important;
+    background-image: var(--user-avatar) !important;
+}
+
+main [data-message-author-role="assistant"]::after,
+main [data-message-author-role="user"]::after {
+    position: absolute !important;
+    top: 2px !important;
+    max-width: 70% !important;
+    overflow: visible !important;
+    white-space: nowrap !important;
+    text-overflow: clip !important;
+    color: var(--name-text) !important;
+    font-family: var(--name-font) !important;
+    font-size: var(--name-font-size) !important;
+    line-height: 44px !important;
+    height: 50px !important;
+    font-weight: 500 !important;
+    pointer-events: none !important;
+    z-index: 30 !important;
+}
+
+main [data-message-author-role="assistant"]::after {
+    content: var(--assistant-name) !important;
+    left: calc(var(--avatar-size) + 14px) !important;
+    text-align: left !important;
+}
+
+main [data-message-author-role="user"]::after {
+    content: var(--user-name) !important;
+    right: calc(var(--avatar-size) + 14px) !important;
+    text-align: right !important;
+}
+
+main [data-message-author-role].ctp-has-music-staff,
+[data-message-author-role].ctp-has-music-staff {
+    position: relative !important;
+    overflow: visible !important;
+}
+
+.ctp-music-staff {
+    z-index: 24 !important;
+    display: block !important;
+    opacity: 0.82 !important;
+    pointer-events: none !important;
+}
+
+main [data-message-author-role="assistant"]:not(.ctp-has-music-staff)::after,
+main [data-message-author-role="user"]:not(.ctp-has-music-staff)::after {
+    min-width: 132px !important;
+    background-repeat: no-repeat !important;
+    background-image:
+        linear-gradient(var(--ctp-staff-fallback-line, rgba(86, 86, 94, 0.30)), var(--ctp-staff-fallback-line, rgba(86, 86, 94, 0.30))),
+        linear-gradient(var(--ctp-staff-fallback-line, rgba(86, 86, 94, 0.30)), var(--ctp-staff-fallback-line, rgba(86, 86, 94, 0.30))),
+        linear-gradient(var(--ctp-staff-fallback-line, rgba(86, 86, 94, 0.30)), var(--ctp-staff-fallback-line, rgba(86, 86, 94, 0.30))),
+        linear-gradient(var(--ctp-staff-fallback-line, rgba(86, 86, 94, 0.30)), var(--ctp-staff-fallback-line, rgba(86, 86, 94, 0.30))),
+        linear-gradient(var(--ctp-staff-fallback-line, rgba(86, 86, 94, 0.30)), var(--ctp-staff-fallback-line, rgba(86, 86, 94, 0.30))),
+        radial-gradient(ellipse at 45% 52%, var(--ctp-staff-fallback-note, rgba(86, 86, 94, 0.26)) 0%, var(--ctp-staff-fallback-note, rgba(86, 86, 94, 0.26)) 44%, transparent 48%),
+        radial-gradient(ellipse at 45% 52%, var(--ctp-staff-fallback-note, rgba(86, 86, 94, 0.26)) 0%, var(--ctp-staff-fallback-note, rgba(86, 86, 94, 0.26)) 44%, transparent 48%),
+        radial-gradient(ellipse at 45% 52%, var(--ctp-staff-fallback-note, rgba(86, 86, 94, 0.26)) 0%, var(--ctp-staff-fallback-note, rgba(86, 86, 94, 0.26)) 44%, transparent 48%),
+        radial-gradient(ellipse at 45% 52%, var(--ctp-staff-fallback-note, rgba(86, 86, 94, 0.26)) 0%, var(--ctp-staff-fallback-note, rgba(86, 86, 94, 0.26)) 44%, transparent 48%),
+        radial-gradient(ellipse at 45% 52%, var(--ctp-staff-fallback-note, rgba(86, 86, 94, 0.26)) 0%, var(--ctp-staff-fallback-note, rgba(86, 86, 94, 0.26)) 44%, transparent 48%) !important;
+    background-size:
+        58px 1px,
+        58px 1px,
+        58px 1px,
+        58px 1px,
+        58px 1px,
+        8px 8px,
+        8px 8px,
+        8px 8px,
+        8px 8px,
+        8px 8px !important;
+}
+
+main [data-message-author-role="assistant"]:not(.ctp-has-music-staff)::after {
+    background-position:
+        right 4px top 14px,
+        right 4px top 18px,
+        right 4px top 22px,
+        right 4px top 26px,
+        right 4px top 30px,
+        right 54px top 27px,
+        right 44px top 23px,
+        right 34px top 19px,
+        right 24px top 15px,
+        right 14px top 11px !important;
+}
+
+main [data-message-author-role="user"]:not(.ctp-has-music-staff)::after {
+    background-position:
+        left 4px top 14px,
+        left 4px top 18px,
+        left 4px top 22px,
+        left 4px top 26px,
+        left 4px top 30px,
+        left 6px top 27px,
+        left 16px top 23px,
+        left 26px top 19px,
+        left 36px top 15px,
+        left 46px top 11px !important;
+}
+
+html.dark {
+    --ctp-staff-fallback-line: rgba(255, 255, 255, 0.28);
+    --ctp-staff-fallback-note: rgba(255, 255, 255, 0.26);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --ctp-staff-fallback-line: rgba(255, 255, 255, 0.28);
+        --ctp-staff-fallback-note: rgba(255, 255, 255, 0.26);
+    }
+}
