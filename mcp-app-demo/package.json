@@ -1,0 +1,17 @@
+{
+  "name": "joey-echo-apps-sdk-ui-demo",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server.mjs",
+    "inspect": "npx @modelcontextprotocol/inspector node server.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "latest",
+    "express": "latest"
+  },
+  "devDependencies": {
+    "@modelcontextprotocol/inspector": "latest"
+  }
+}
